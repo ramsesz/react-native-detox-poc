@@ -22,10 +22,11 @@ const homeStyles = StyleSheet.create({
 
 export const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (
-    <View style={homeStyles.container}>
+    <View style={homeStyles.container} testID="home-screen">
       <Button
-        title="Go to Jane's profile"
         onPress={() => navigation.navigate('Profile', {name: 'Jane'})}
+        testID="home-screen-button-profile"
+        title="Go to Jane's profile"
       />
     </View>
   );
