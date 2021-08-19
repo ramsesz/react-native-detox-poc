@@ -4,6 +4,7 @@ import {SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {MainStack} from 'router';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import {UserProvider} from 'hooks';
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -27,13 +28,15 @@ const App = () => {
   });
 
   return (
-    <ApolloProvider client={client}>
-      <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <MainStack />
-        </NavigationContainer>
-      </SafeAreaView>
-    </ApolloProvider>
+    <UserProvider>
+      <ApolloProvider client={client}>
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer>
+            <MainStack />
+          </NavigationContainer>
+        </SafeAreaView>
+      </ApolloProvider>
+    </UserProvider>
   );
 };
 
