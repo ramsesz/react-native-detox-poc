@@ -21,7 +21,7 @@ const profileStyles = StyleSheet.create({
 export const ProfileScreen: React.FC<Props> = ({route}) => {
   return (
     <View style={profileStyles.container}>
-      <Text>This is {route.params.name}'s profile</Text>
+      <Text testID="profile-username">{route.params.userId}</Text>
     </View>
   );
 };

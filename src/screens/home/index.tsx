@@ -29,16 +29,14 @@ export const HomeScreen: React.FC<Props> = ({navigation}) => {
     <View style={homeStyles.container} testID="home-screen">
       <Text>Welcome</Text>
       <Button
-        onPress={() => navigation.navigate('Profile', {userId: 'Jane'})}
+        onPress={() =>
+          navigation.navigate('Profile', {userId: user?.userName || ''})
+        }
         testID="home-screen-button-profile"
         title={`Go to ${user?.userName}'s profile`}
       />
       <Button
-        onPress={() => {
-          if (signOut) {
-            signOut();
-          }
-        }}
+        onPress={() => signOut?.()}
         testID="home-screen-button-logout"
         title="Sign out"
       />

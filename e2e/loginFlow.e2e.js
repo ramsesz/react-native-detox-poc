@@ -1,4 +1,4 @@
-/* eslint-env detox/detox, mocha */
+const {MOCK_USER} = require('./constants/user');
 
 describe('Login flow', () => {
   beforeAll(async () => {
@@ -11,8 +11,8 @@ describe('Login flow', () => {
   });
 
   it('should login successfully', async () => {
-    await element(by.id('login-input-username')).typeText('someone');
-    await element(by.id('login-input-password')).typeText('123456%8');
+    await element(by.id('login-input-username')).typeText(MOCK_USER.userName);
+    await element(by.id('login-input-password')).typeText(MOCK_USER.password);
     await element(by.id('login-button')).tap();
 
     await expect(element(by.text('Welcome'))).toBeVisible();
