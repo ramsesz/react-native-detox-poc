@@ -75,7 +75,7 @@ export const LoginScreen: FC = () => {
           {error}
         </Text>
       )}
-      <Button title="Sign in" onPress={login} />
+      <Button title="Sign in" onPress={login} testID="login-button" />
     </View>
   );
 };

@@ -2,6 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from 'config';
 import {useAuth} from 'hooks';
 import React from 'react';
+import {Text} from 'react-native';
 import {Button, StyleSheet, View} from 'react-native';
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -26,6 +27,7 @@ export const HomeScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={homeStyles.container} testID="home-screen">
+      <Text>Welcome</Text>
       <Button
         onPress={() => navigation.navigate('Profile', {userId: 'Jane'})}
         testID="home-screen-button-profile"
@@ -37,7 +39,6 @@ export const HomeScreen: React.FC<Props> = ({navigation}) => {
             signOut();
           }
         }}
-        color="black"
         testID="home-screen-button-logout"
         title="Sign out"
       />
