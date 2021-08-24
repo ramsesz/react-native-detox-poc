@@ -3,7 +3,7 @@ name: Android
 on:
   push:
     branches:
-      - main
+      - develop
 jobs:
   e2e:
     runs-on: macos-latest
