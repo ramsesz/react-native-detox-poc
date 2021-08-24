@@ -15,6 +15,11 @@ jobs:
       with:
         fetch-depth: 1
 
+    - name: Use specific Java version for sdkmanager to work
+      uses: joschi/setup-jdk@v2
+      with:
+        java-version: 'openjdk8'
+        architecture: 'x64'
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -62,12 +67,6 @@ jobs:
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
         script: echo "Generated AVD snapshot for caching."
-
-    # - name: Use specific Java version for sdkmanager to work
-    #   uses: joschi/setup-jdk@v2
-    #   with:
-    #     java-version: 'openjdk8'
-    #     architecture: 'x64'
 
     - name: Install node_modules
       run: |
