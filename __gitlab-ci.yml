@@ -1,0 +1,25 @@
+detox_e2e:
+  stage: test
+  image: reactnativecommunity/react-native-android
+  before_script:
+    - npm i -g envinfo detox-cli && envinfo
+    # Increase file watcher limit, see more here: https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers#the-technical-details
+    - echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+    - mkdir -p /root/.android && touch /root/.android/repositories.cfg
+    # The Dockerimage provides two paths for sdkmanager and avdmanager, which the defaults are from $ANDROID_HOME/cmdline-tools
+    # That is not compatible with the one that Detox is using ($ANDROID_HOME/tools/bin)
+    - echo yes | $ANDROID_HOME/tools/bin/sdkmanager --channel=0 --verbose "system-images;android-27;default;x86_64"
+    # - echo yes | $ANDROID_HOME/tools/bin/sdkmanager --channel=0 --verbose "system-images;android-25;google_apis;armeabi-v7a"
+    # Nexus 6P, API 27, XXXHDPI
+    - echo no | $ANDROID_HOME/tools/bin/avdmanager --verbose create avd --force --name "Nexus6P" --package "system-images;android-27;default;x86_64" --sdcard 200M --device 11
+    # - echo no | $ANDROID_HOME/tools/bin/avdmanager --verbose create avd --force --name "testDevice" -k "system-images;android-25;google_apis;armeabi-v7a"
+    - adb start-server
+  script:
+    - avdmanager list avd
+    - yarn
+    - yarn e2e:build-android-ci
+    - yarn e2e:run-android-ci
+    # - npx detox build -c android.emu.release.ci
+    # - npx detox test -c android.emu.release.ci --headless
+  tags:
+    - runner-c5-8g 

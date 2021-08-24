@@ -7,6 +7,11 @@
       "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/BagaarDetoxPoc.app",
       "build": "xcodebuild -workspace ios/BagaarDetoxPoc.xcworkspace -configuration Release -sdk iphonesimulator -derivedDataPath ios/build  -scheme BagaarDetoxPoc"
     },
+    "ios.release": {
+      "type": "ios.app",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/BagaarDetoxPoc.app",
+      "build": "xcodebuild -workspace ios/BagaarDetoxPoc.xcworkspace -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -scheme BagaarDetoxPoc"
+    },
     "android.debug": {
       "type": "android.apk",
       "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
@@ -30,6 +35,12 @@
       "device": {
         "avdName": "Pixel_API_28_AOSP"
       }
+    },
+    "emulator.ci": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_API_29_AOSP"
+      }
     }
   },
   "configurations": {
@@ -37,13 +48,17 @@
       "device": "simulator",
       "app": "ios"
     },
+    "ios.sim.release": {
+      "device": "simulator",
+      "app": "ios.release"
+    },
     "android.emu.debug": {
       "device": "emulator",
       "app": "android.debug"
     },
-    "android.emu.release": {
-      "device": "emulator",
-      "app": "android.release"
+    "android.emu.ci": {
+      "device": "emulator.ci",
+      "app": "android.debug"
     }
   }
 }

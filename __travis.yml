@@ -1,0 +1,31 @@
+language: objective-c
+osx_image: xcode12.5
+
+branches:
+  only:
+  - develop
+
+env:
+  global:
+  - NODE_VERSION=14.17.1
+
+install:
+- brew tap wix/brew
+- brew install applesimutils
+- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+- export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+- nvm install $NODE_VERSION
+- nvm use $NODE_VERSION
+- nvm alias default $NODE_VERSION
+
+- npm install -g react-native-cli
+- npm install -g detox-cli
+
+script:
+- npm install
+- cd ios && npx pod install && cd ../
+# - travis_wait 30 detox build --configuration ios.sim.release &> detox_build.log
+- detox build -c ios.sim.release  | egrep '^(/.+:[0-9+:[0-9]+:.(error|warning):|fatal|===)' -
+- detox test --configuration ios.sim.release --cleanup
+# - npm run e2e:build-ios-ci
+# - npm run e2e:run-ios-ci

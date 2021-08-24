@@ -1,18 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {MainStack} from 'router';
+import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import {UserProvider} from 'hooks';
+
+// Initialize Apollo Client
+const client = new ApolloClient({
+  uri: 'localhost:4000/graphql',
+  cache: new InMemoryCache(),
+});
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -30,11 +28,15 @@ const App = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <MainStack />
-      </NavigationContainer>
-    </SafeAreaView>
+    <UserProvider>
+      <ApolloProvider client={client}>
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer>
+            <MainStack />
+          </NavigationContainer>
+        </SafeAreaView>
+      </ApolloProvider>
+    </UserProvider>
   );
 };
 
