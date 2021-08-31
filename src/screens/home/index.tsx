@@ -36,6 +36,11 @@ export const HomeScreen: React.FC<Props> = ({navigation}) => {
         title={`Go to ${user?.userName}'s profile`}
       />
       <Button
+        onPress={() => navigation.navigate('Boxes')}
+        testID="home-screen-button-boxes"
+        title={'Boxes'}
+      />
+      <Button
         onPress={() => signOut?.()}
         testID="home-screen-button-logout"
         title="Sign out"
