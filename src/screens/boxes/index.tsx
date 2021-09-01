@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
 const GET_BOXES = gql`
   query GetBoxes {
     boxes {
+      id
       title
     }
   }
