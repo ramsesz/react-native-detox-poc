@@ -2,7 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {RootStackParamList} from 'config';
 import {useAuth} from 'hooks';
 import * as React from 'react';
-import {HomeScreen, LoginScreen, ProfileScreen} from 'screens';
+import {BoxesScreen, HomeScreen, LoginScreen, ProfileScreen} from 'screens';
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
@@ -21,6 +21,7 @@ export const MainStack = () => {
             options={{title: 'Home'}}
           />
           <RootStack.Screen name="Profile" component={ProfileScreen} />
+          <RootStack.Screen name="Boxes" component={BoxesScreen} />
         </>
       )}
     </RootStack.Navigator>

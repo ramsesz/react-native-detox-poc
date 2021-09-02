@@ -1,14 +1,18 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
-import {SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import {Platform, SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
+
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {MainStack} from 'router';
-import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
 import {UserProvider} from 'hooks';
+
+const GRAPHQL_HOST = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
+const GRAPHQL_URI = `http://${GRAPHQL_HOST}:4000/graphql`;
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: 'localhost:4000/graphql',
+  uri: GRAPHQL_URI,
   cache: new InMemoryCache(),
 });
 

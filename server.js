@@ -1,4 +1,5 @@
 const {ApolloServer, gql} = require('apollo-server');
+const {MOCK_BOXES} = require('./mocks/boxes');
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -8,6 +9,7 @@ const typeDefs = gql`
 
   # This "Book" type defines the queryable fields for every book in our data source.
   type Box {
+    id: String
     title: String
   }
 
@@ -19,14 +21,7 @@ const typeDefs = gql`
   }
 `;
 
-const boxes = [
-  {
-    title: 'Box 1',
-  },
-  {
-    title: 'Box 2',
-  },
-];
+const boxes = MOCK_BOXES;
 
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves books from the "books" array above.
@@ -36,11 +31,25 @@ const resolvers = {
   },
 };
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-const server = new ApolloServer({typeDefs, resolvers});
+const createServerWithMockedSchema = (customMocks = null) => {
+  const opts = {typeDefs, resolvers};
 
-// The `listen` method launches a web server.
-server.listen().then(({url}) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  if (customMocks) {
+    //@ts-ignore
+    opts.mocks = customMocks;
+  }
+  const server = new ApolloServer(opts);
+
+  return server;
+};
+
+// const server = createServerWithMockedSchema();
+
+// // The `listen` method launches a web server.
+// server.listen().then(({url}) => {
+//   console.log(`🚀  Server ready at ${url}`);
+// });
+
+module.exports = {
+  createServerWithMockedSchema,
+};
