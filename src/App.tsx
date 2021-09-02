@@ -8,7 +8,7 @@ import {UserProvider} from 'hooks';
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: 'localhost:4000/graphql',
+  uri: 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
 });
 

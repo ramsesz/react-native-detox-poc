@@ -17,7 +17,7 @@
     "e2e:run-android": "detox test -c android.emu.debug",
     "e2e:build-android-ci": "detox build -c android.emu.ci",
     "e2e:run-android-ci": "detox test -c android.emu.ci --headless",
-    "server": "node server.js"
+    "server": "node serverRun.js"
   },
   "dependencies": {
     "@apollo/client": "3.4.8",
