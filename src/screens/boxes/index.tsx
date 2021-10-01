@@ -2,8 +2,14 @@ import {gql, useQuery} from '@apollo/client';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from 'config';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 import {Box} from 'typings';
 
 interface BoxesData {
@@ -24,6 +30,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  list: {flex: 1, width: '100%'},
+  listItem: {
+    borderBottomColor: '#F1F1F1',
+    borderBottomWidth: 1,
+    backgroundColor: 'white',
+    padding: 16,
+    flex: 1,
+    width: '100%',
+  },
 });
 
 const GET_BOXES = gql`
@@ -35,7 +50,7 @@ const GET_BOXES = gql`
   }
 `;
 
-export const BoxesScreen: React.FC<Props> = () => {
+export const BoxesScreen: React.FC<Props> = ({navigation}) => {
   const {loading, error, data} = useQuery<BoxesData>(GET_BOXES);
   if (loading) {
     return <Text>Loading...</Text>;
@@ -43,15 +58,29 @@ export const BoxesScreen: React.FC<Props> = () => {
   if (error) {
     return <Text>Error :(</Text>;
   }
+
+  const onPressItem = ({id}: Box) =>
+    navigation.navigate('BoxDetail', {boxId: id});
+
   return (
-    <View style={styles.container}>
-      <View>
-        {data?.boxes.map(({title, id}) => (
-          <View key={id}>
-            <Text>{title}</Text>
-          </View>
-        ))}
-      </View>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={data?.boxes}
+        style={styles.list}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        renderItem={({item, index, separators}) => (
+          <TouchableHighlight
+            key={item.id}
+            onPress={() => onPressItem(item)}
+            onShowUnderlay={separators.highlight}
+            onHideUnderlay={separators.unhighlight}>
+            <View style={styles.listItem}>
+              <Text>{item.title}</Text>
+            </View>
+          </TouchableHighlight>
+        )}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
   );
 };
