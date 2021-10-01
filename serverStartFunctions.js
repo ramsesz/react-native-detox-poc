@@ -8,12 +8,12 @@ function startHttpServer() {
   return graphQLServer.listen(PORT);
 }
 
-async function startGraphQLServer(mocks = null) {
+async function startGraphQLServer(serverOptions = {}) {
   if (graphQLServer) {
     console.warn("Tried to start HTTP server, when there's already one.");
     return;
   }
-  graphQLServer = createServerWithMockedSchema(mocks);
+  graphQLServer = createServerWithMockedSchema(serverOptions);
   await startHttpServer();
 }
 

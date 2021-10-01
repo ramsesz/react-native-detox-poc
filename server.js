@@ -9,6 +9,7 @@ const typeDefs = gql`
   }
   type Query {
     boxes: [Box]
+    box(id: ID!): Box
   }
 `;
 
@@ -17,16 +18,22 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     boxes: () => MOCK_BOXES,
-    boxes: () => boxes,
+    box(parent, args) {
+      return MOCK_BOXES.find(box => box.id === args.id);
+    },
   },
 };
 
-const createServerWithMockedSchema = (customMocks = null) => {
-  const opts = {typeDefs, resolvers};
-
-  if (customMocks) {
-    opts.mocks = customMocks;
-  }
+const createServerWithMockedSchema = (customOptions = {}) => {
+  const opts = {
+    typeDefs,
+    resolvers: {
+      Query: {
+        ...resolvers.Query,
+        ...customOptions?.resolvers?.Query,
+      },
+    },
+  };
 
   return new ApolloServer(opts);
 };
