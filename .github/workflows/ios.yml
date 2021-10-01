@@ -5,7 +5,7 @@ on:
     branches:
       - develop
       - main
-      - add-box-detail
+      # - add-box-detail
 jobs:
   e2e:
     runs-on: macos-11
